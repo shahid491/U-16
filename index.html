@@ -1,272 +1,345 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>U-16 Tournament</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Custom styles for screens smaller than 400px */
-        @media (max-width: 399px) {
-            .mobile-header {
-                width: 390px;
-                margin: 0 auto;
-            }
-            .mobile-footer {
-                width: 390px;
-                margin: 0 auto;
-            }
-            .mobile-div {
-                width: 350px;
-                margin: 0 auto;
-            }
-            .mobile-content {
-                padding: 0.75rem;
-            }
-            .mobile-text {
-                font-size: 0.875rem;
-            }
-            .mobile-title {
-                font-size: 1.25rem;
-            }
-            .mobile-score {
-                font-size: 1.5rem;
-            }
-            .mobile-icon {
-                width: 2rem;
-                height: 2rem;
-                font-size: 0.75rem;
-            }
-            .mobile-social {
-                width: 2rem;
-                height: 2rem;
-            }
-            .mobile-social svg {
-                width: 1rem;
-                height: 1rem;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>U-16 Tournament</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1536520002442-39764a41e982?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #222;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.92);
+      z-index: -1;
+    }
+
+    header, footer {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 2s ease-in;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-bottom: 2px solid #eee;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      letter-spacing: 1px;
+      color: #111;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+
+    .section {
+      background: rgba(255, 255, 255, 0.85);
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 900px;
+      border-radius: 10px;
+      animation: fadeInUp 1.5s ease-in-out;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      border-bottom: 2px solid #222;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+      color: #111;
+    }
+
+    .match, .team {
+      margin: 15px 0;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+      display: flex;
+      align-items: center;
+      transition: transform 0.3s ease;
+    }
+
+    .match:hover, .team:hover {
+      transform: scale(1.02);
+      background: #fff;
+    }
+
+    .match img, .team img {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      margin-right: 15px;
+      border-radius: 50%;
+      border: 2px solid #333;
+      background: #fff;
+    }
+
+    .notification {
+      background: #fffbcc;
+      color: #333;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 800px;
+      border-left: 5px solid #f0c000;
+      animation: fadeInRight 1s;
+      font-weight: bold;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .social {
+      margin-top: 15px;
+    }
+
+    .social img {
+      width: 35px;
+      height: 35px;
+      margin: 0 10px;
+      transition: transform 0.3s ease-in-out;
+      filter: none;
+    }
+
+    .social img:hover {
+      transform: scale(1.2);
+    }
+
+    input[type="file"] {
+      margin-top: 10px;
+      color: #000;
+    }
+
+    footer {
+      font-size: 0.9em;
+      background-color: #f2f2f2;
+      border-top: 2px solid #ddd;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    @keyframes glow {
+      from {text-shadow: 0 0 2px #999;}
+      to {text-shadow: 0 0 10px #555;}
+    }
+
+    @keyframes fadeInUp {
+      from {transform: translateY(30px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+
+    @keyframes fadeInRight {
+      from {transform: translateX(-30px); opacity: 0;}
+      to {transform: translateX(0); opacity: 1;}
+    }
+
+    /* Responsive */
+@media (max-width: 400px) {
+  body {
+    padding: 10px 0;
+  }
+
+  header, footer {
+    width: 390px;
+    margin: auto;
+    padding: 15px 10px;
+    box-sizing: border-box;
+  }
+
+  .section {
+    width: 350px;
+    margin: 15px auto;
+    padding: 15px 10px;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  .match, .team {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 15px 10px;
+  }
+
+  .match img, .team img {
+    width: 50px;
+    height: 50px;
+    margin: 0 0 10px 0;
+  }
+
+  .match span, .team div {
+    font-size: 0.9em;
+  }
+
+  .notification {
+    width: 350px;
+    margin: 10px auto 20px;
+    font-size: 0.95em;
+    text-align: center;
+  }
+
+  input[type="file"] {
+    width: 100%;
+  }
+}
+
+    
+  </style>
 </head>
-<body class="bg-white text-black min-h-screen">
-    <!-- Header -->
-    <header class="bg-black text-white py-6 sm:py-8 md:py-12 shadow-lg mobile-header">
-        <div class="container mx-auto px-4 sm:px-6 text-center mobile-content">
-            <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 mobile-title">⚽ U-16 Tournament</h1>
-            <p class="text-sm sm:text-base md:text-lg lg:text-xl mobile-text">Govt High-School Nadihal Playground</p>
-        </div>
-         <!-- Social Media Buttons -->
-        <p class="text-gray-400 mb-2 text-sm sm:text-base mobile-text">Contact us: +91 6005231580</p>
-        <div class="flex justify-center space-x-4 sm:space-x-6 mb-6 sm:mb-8">
-            <a href="https://www.facebook.com/meer.javid.1000" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 mobile-social">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-            </a>
-            
-            <a href="https://www.instagram.com/shahid._76?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 mobile-social">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-            </a>
-            
-            <a href="https://wa.me/916005231580" target="_blank" class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center hover:bg-gray-200 transition-colors duration-300 mobile-social">
-                <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                </svg>
-            </a>
-        </div>
-    </header>
-        <!-- Upcoming Matches Section -->
-    <section class="mb-8 sm:mb-12 md:mb-16">
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-black mobile-title">Upcoming Matches</h2>
-        <div class="max-w-4xl mx-auto space-y-4 sm:space-y-6 mobile-div">
-            <div class="bg-black text-white rounded-lg p-4 sm:p-6 md:p-8 border-2 border-black mobile-content">
-                <div class="text-center mb-4 sm:mb-6">
-                    <span class="text-sm sm:text-base md:text-lg font-medium mobile-text">📅 ? - ⏰ ?</span>
-                </div>
-                <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center font-bold mr-2 sm:mr-4 text-sm sm:text-base mobile-icon">?</div>
-                        <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">?</span>
-                    </div>
-                    <div class="text-2xl sm:text-3xl md:text-4xl font-bold mobile-score">VS</div>
-                    <div class="flex items-center">
-                        <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">?</span>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center font-bold ml-2 sm:ml-4 text-sm sm:text-base mobile-icon">?</div>
-                    </div>
-                </div>
-                <div class="mt-4 sm:mt-6 text-center text-sm sm:text-base mobile-text">
-                    📍 Govt High-School Nadihal Playground
-                </div>
-            </div>
+<body>
 
-            <div class="bg-black text-white rounded-lg p-4 sm:p-6 md:p-8 border-2 border-black mobile-content">
-                <div class="text-center mb-4 sm:mb-6">
-                    <span class="text-sm sm:text-base md:text-lg font-medium mobile-text">📅 ? - ⏰ ?</span>
-                </div>
-                <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-                    <div class="flex items-center">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center font-bold mr-2 sm:mr-4 text-sm sm:text-base mobile-icon">?</div>
-                        <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">?</span>
-                    </div>
-                    <div class="text-2xl sm:text-3xl md:text-4xl font-bold mobile-score">VS</div>
-                    <div class="flex items-center">
-                        <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">?</span>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white text-black rounded-full flex items-center justify-center font-bold ml-2 sm:ml-4 text-sm sm:text-base mobile-icon">?</div>
-                    </div>
-                </div>
-                <div class="mt-4 sm:mt-6 text-center text-sm sm:text-base mobile-text">
-                    📍 Govt High-School Nadihal Playground
-                </div>
-            </div>
-        </div>
-    </section>
-</div>
+<header>
+  <h1>U-16 Tournament</h1>
+  <p>Govt High-School Nadihal Playground</p>
+  <div class="social">
+    <a href="https://www.instagram.com/shahid._76?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"><img src="https://img.icons8.com/ios-glyphs/30/000000/instagram-new.png"/></a>
+    <a href="https://facebook.com/meer.javid.1000" target="_blank"><img src="https://img.icons8.com/ios-glyphs/30/000000/facebook-new.png"/></a>
+    <a href="https://wa.me/6005231580" target="_blank"><img src="https://img.icons8.com/ios-glyphs/30/000000/whatsapp.png"/></a>
+  </div>
+</header>
 
-    <div class="container mx-auto px-4 sm:px-6 py-6 sm:py-8 md:py-12 mobile-div mobile-content">
-        <!-- Registered Teams Section -->
-        <section class="mb-8 sm:mb-12 md:mb-16">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-black mobile-title">Registered Teams</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            UN
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">UNITED 11 NADIHAL</h3>
-                    </div>
-                </div>
+<section class="notification">
+  📢 <strong>Next Match:</strong> ⏰? 📅? ELITE FC BARAMULLA VS ELITE THUNDER NADIHA!
+</section>
 
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            RFB
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">ROYALS FC BARAMULLA</h3>
-                    </div>
-                </div>
+<section class="section">
+    <h2>Upcoming Matches</h2>
+    <div class="match">
+      <img class="team-logo teamE-logo" src="elite.JPG" alt="Team  Logo">
+      <span>ELITE FC BARAMULLA vs ELITE THUNDER NADIHAL</span> <img class="team-logo teamE-logo" src="elite thunder.JPG" alt="Team  Logo"><strong>⏰? 📅?</strong>
+    </div>
+    <div class="match">
+      <img class="team-logo teamE-logo" src="royal fc.JPG" alt="Team  Logo">
+      <span>ROYALS FC BARAMULLA vs ?</span> <img class="team-logo teamE-logo" src="https://img.icons8.com/ios-filled/100/000000/soccer-ball.png" alt="Team  Logo"><strong>⏰? 📅?</strong>
+    </div>
+  </section>
 
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            AFA
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">ACHABAL FOOTBALL ACADEMY</h3>
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            EFB
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">ELITE FC BARAMULLA</h3>
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            EFB
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">ELITE FC BARAMULLA(re-entry)</h3>
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            RFB
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">ROYALS FC BARAMULLA (re-entry)</h3>
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                            ?
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">?</h3>
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 hover:bg-black hover:text-white transition-all duration-300 mobile-content">
-                    <div class="text-center">
-                        <div class="w-12 h-12 sm:w-16 sm:h-16 bg-black text-white rounded-full flex items-center justify-center text-lg sm:text-xl font-bold mx-auto mb-3 sm:mb-4 hover:bg-white hover:text-black border-2 border-black mobile-icon">
-                          ?  
-                        </div>
-                        <h3 class="text-lg sm:text-xl font-semibold mobile-text">?</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Past Matches Section -->
-        <section class="mb-8 sm:mb-12 md:mb-16">
-            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-black mobile-title">Past Match Results</h2>
-            <div class="max-w-4xl mx-auto space-y-4 sm:space-y-6 mobile-div">
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 md:p-8 mobile-content">
-                    <div class="text-center mb-4 sm:mb-6">
-                        <span class="text-sm sm:text-base md:text-lg font-medium text-gray-600 mobile-text">JULY 27, 2025 - 08:00 AM</span>
-                    </div>
-                    <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center font-bold mr-2 sm:mr-4 text-sm sm:text-base mobile-icon">AFA</div>
-                            <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">ACHABAL FOOTBALL ACADEMY(winner)</span>
-                        </div>
-                        <div class="text-2xl sm:text-3xl md:text-4xl font-bold mobile-score">VS</div>
-                        <div class="flex items-center">
-                            <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">ELITE FC BARAMULLA</span>
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center font-bold ml-2 sm:ml-4 text-sm sm:text-base mobile-icon">EFB</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 sm:mt-6 text-center text-gray-600 text-sm sm:text-base mobile-text">
-                        📍 Govt High-School Nadihal Playground
-                    </div>
-                </div>
-
-                <div class="bg-white border-2 border-black rounded-lg p-4 sm:p-6 md:p-8 mobile-content">
-                    <div class="text-center mb-4 sm:mb-6">
-                        <span class="text-sm sm:text-base md:text-lg font-medium text-gray-600 mobile-text">AUGUST 3, 2025 - 08:00 AM</span>
-                    </div>
-                    <div class="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
-                        <div class="flex items-center">
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center font-bold mr-2 sm:mr-4 text-sm sm:text-base mobile-icon">UN</div>
-                            <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">UNITED 11 NADIHAL(winner)</span>
-                        </div>
-                        <div class="text-2xl sm:text-3xl md:text-4xl font-bold mobile-score">VS</div>
-                        <div class="flex items-center">
-                            <span class="text-lg sm:text-xl md:text-2xl font-semibold mobile-text">ROYALS FC BARAMULLA</span>
-                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-black text-white rounded-full flex items-center justify-center font-bold ml-2 sm:ml-4 text-sm sm:text-base mobile-icon">RFB</div>
-                        </div>
-                    </div>
-                    <div class="mt-4 sm:mt-6 text-center text-gray-600 text-sm sm:text-base mobile-text">
-                        📍 Govt High-School Nadihal Playground
-                    </div>
-                </div>
-            </div>
-        </section>
+<section class="section">
+  <h2>Past Matches</h2>
+  <div class="match">
+    <img class="team-logo teamA-logo" src="achabal.png" alt="Team  Logo">
+    <span>ACHABAL FOOTBALL ACADEMY(winner) vs ELITE FC BARAMULLA </span><img class="team-logo teamA-logo" src="elite.JPG" alt="Team Logo"> 
+  </div>
+  <div class="match">
+    <div class="match">
+        <img class="team-logo teamA-logo" src="united 11.JPG" alt="Team  Logo">
+        <span>UNITED 11 NADIHAL(winner) vs ROYALS FC BARAMULLA </span><img class="team-logo teamA-logo" src="royal fc.JPG" alt="Team Logo"> 
+      </div>
+      
+</section>
 
 
-        
 
-    <!-- Footer -->
-    <footer class="bg-black text-white py-8 sm:py-10 md:py-12 mobile-footer">
-        <div class="container mx-auto px-4 sm:px-6 text-center mobile-content">
-            <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 mobile-title">U-16 Tournament</h3>
-            <p class="text-base sm:text-lg mb-4 sm:mb-6 mobile-text">Govt High-School Nadihal Playground</p>
-            
-           
-            
-            
-            <p class="text-gray-400 mb-2 text-sm sm:text-base mobile-text">Contact us: +91 6005231580</p>
-            <p class="text-gray-400 text-xs sm:text-sm mobile-text">© 2025 U-16 Football Tournament. All rights reserved.</p>
-        </div>
-    </footer>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'969eefb3e74c54ae',t:'MTc1NDMxOTc1Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<section class="section">
+  <h2>Registered Teams (8)</h2>
+
+  <!-- Team A -->
+  <div class="team">
+    <img class="team-logo teamA-logo" src="united 11.JPG" alt="Team  Logo">
+    <div>
+      <strong>UNITED 11 NADIHAL</strong> 
+      <br/>
+    </div>
+  </div>
+
+  <!-- Team B -->
+  <div class="team">
+    <img class="team-logo teamB-logo" src="royal fc.JPG" alt="Team  Logo">
+    <div>
+      <strong>ROYALS FC BARAMULLA</strong>
+      <br/>
+    </div>
+  </div>
+  <!-- Team C -->
+  <div class="team">
+    <img class="team-logo teamC-logo" src="achabal.png" alt="Team  Logo">
+    <div>
+      <strong>ACHABAL FOOTBALL ACADEMY</strong>
+      <br/>
+    </div>
+  </div>
+<!-- Team D -->
+<div class="team">
+    <img class="team-logo teamD-logo" src="elite.JPG" alt="Team  Logo">
+    <div>
+      <strong>ELITE FC BARAMULLA</strong> 
+      <br/>
+    </div>
+  </div>
+  <!-- Team E -->
+  <div class="team">
+    <img class="team-logo teamE-logo" src="elite thunder.JPG" alt="Team  Logo">
+    <div>
+      <strong>ELITE THUNDER NADIHAL</strong>
+      <br/>
+    </div>
+  </div>
+  <!-- Team F -->
+  <div class="team">
+    <img class="team-logo teamF-logo" src="" alt="Team  Logo">
+    <div>
+      <strong>?</strong> 
+      <br/>
+    </div>
+  </div>
+  <!-- Team G -->
+  <div class="team">
+    <img class="team-logo teamG-logo" src="royal fc.JPG" alt="Team  Logo">
+    <div>
+      <strong>ROYALS FC BARAMULLA(re-entry)</strong> 
+      <br/>
+    </div>
+  </div>
+  <!-- Team H -->
+  <div class="team">
+    <img class="team-logo teamH-logo" src="elite.JPG" alt="Team  Logo">
+    <div>
+      <strong>ELITE FC BARAMULLA(re-entry)</strong>
+      <br/>
+    </div>
+  </div>
+
+  <!-- Add other teams (C to H) as needed -->
+
+</section>
+
+<footer>
+  <p>&copy; 2025 U-16 Tournament | Contact: 6005231580</p>
+</footer>
+
+<script>
+  function updateLogo(event, teamClass) {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const newLogoURL = e.target.result;
+        const logoElements = document.querySelectorAll('.' + teamClass);
+        logoElements.forEach(img => {
+          img.src = newLogoURL;
+        });
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please upload a valid image file.");
+    }
+  }
+</script>
+
+</body>
 </html>
